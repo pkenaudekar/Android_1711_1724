@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMenuSet.setOnClickListener {
-            val intent_menue = Intent(this, MenuActivity::class.java)
-            startActivity(intent_menue)
+            val intent_menu = Intent(this, MenuSetActivity::class.java)
+            startActivity(intent_menu)
             finish()
         }
 
