@@ -14,6 +14,7 @@ class AccSetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_set)
+
         var first = true
         val typeArray = arrayOf("Type of Account", "Administrative", "Non-Administrative")
         val name = findViewById<EditText>(R.id.editTextName)

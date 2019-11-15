@@ -1,26 +1,29 @@
 package com.example.emenu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.emenu.ui.login.ItemMenuFragment
+import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import com.example.emenu.ui.login.dummy.DummyContent
 
-class MenuSetActivity : AppCompatActivity(), ItemMenuFragment.OnListFragmentInteractionListener {
+class MenuSetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_set)
+        setContentView(R.layout.activity_add_menu)              //change it to activity_menu_set
 
         //added new stuff
-        if(savedInstanceState==null) {
-            supportFragmentManager.beginTransaction().run {
-                replace(R.id.main_container, ItemMenuFragment())
-                commit()
-            }
-        }
-    }
+        val addButton : Button = findViewById(R.id.add_button)
+        val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
+        supportToolbar.title = "E-Menu"
+        setSupportActionBar(supportToolbar)
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        addButton.setOnClickListener {
+            val addIntent = Intent(this, AddMenuActivity::class.java).apply {  }
+            startActivity(addIntent)
+            finish()
+        }
+
     }
 }

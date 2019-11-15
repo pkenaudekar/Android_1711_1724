@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".OptionsActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/btnAccountSet"
         android:layout_width="0dp"
@@ -19,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnMenuSet"
+        android:id="@+id/btnCustomerMenu"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="120dp"
