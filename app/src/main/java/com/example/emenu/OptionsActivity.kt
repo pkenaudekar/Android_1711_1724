@@ -17,7 +17,7 @@ class OptionsActivity : AppCompatActivity() {
         }
 
         btnCustomerMenu.setOnClickListener {
-            val intentMenuSet = Intent(this, AddMenuActivity::class.java)
+            val intentMenuSet = Intent(this, MenuSetActivity::class.java)
             startActivity(intentMenuSet)
             finish()
         }

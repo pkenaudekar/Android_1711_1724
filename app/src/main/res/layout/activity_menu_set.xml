@@ -17,16 +17,36 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:ignore="MissingConstraints" />
 
-    <!-- RecyclerView will come here! -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="435dp"
+        android:layout_height="692dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMenuList"
+            android:layout_width="match_parent"
+            android:layout_height="605dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="vertical"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/activity_menulist"/>
+    </LinearLayout>
 
     <Button
-        android:id="@+id/add_button"
+        android:id="@+id/edit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/design_default_color_primary"
-        android:text="Add Employee"
+        android:text="Manage Menu Items"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
