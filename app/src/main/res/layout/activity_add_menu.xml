@@ -86,21 +86,7 @@
         tools:ignore="InvalidId" />
 
 
-    <Button
-        android:id="@+id/btn_choose_image"
-        android:layout_width="150dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginBottom="24dp"
-        android:text="Choose image"
-        app:layout_constraintBottom_toTopOf="@+id/btn_upload_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_upload"
-        app:layout_constraintTop_toBottomOf="@+id/et_menuprice" />
-
-    <Button
+    <!--<Button
         android:id="@+id/btn_upload_image"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -112,7 +98,24 @@
         app:layout_constraintBottom_toTopOf="@+id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_upload"
-        app:layout_constraintTop_toBottomOf="@+id/btn_choose_image" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_choose_image" />-->
+
+
+    <Button
+        android:id="@+id/btn_choose_image"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="75dp"
+        android:text="Choose image"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/image_upload"
+        app:layout_constraintTop_toBottomOf="@+id/et_menuprice"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button_addMenu"
@@ -149,5 +152,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_editMenu" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="308dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="34dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_addMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_upload" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

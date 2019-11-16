@@ -1,12 +1,11 @@
 package com.example.emenu
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
-import android.os.Build.*
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -14,11 +13,24 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_add_menu.*
+import java.util.*
 
 
 class AddMenuActivity : AppCompatActivity()  {
+
+    private var filePath: Uri? = null
+    private var firebaseStore: FirebaseStorage? = null
+    private var storageReference: StorageReference? = null
+    private lateinit var documentId: String
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +38,14 @@ class AddMenuActivity : AppCompatActivity()  {
 
         //added new stuff
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
-        supportToolbar.title = "E-Menu"
+        supportToolbar.title = "Manage Menu"
         setSupportActionBar(supportToolbar)
 
         val addMenu =findViewById<Button>(R.id.button_addMenu)
         val menu_name = findViewById<EditText>(R.id.etMenuName)
         val menu_desc = findViewById<EditText>(R.id.et_menu_desc)
         val menu_price = findViewById<EditText>(R.id.et_menuprice)
-        val db = FirebaseFirestore.getInstance()
+        storageReference = FirebaseStorage.getInstance().reference
 
         //BUTTON CLICK
         btn_choose_image.setOnClickListener {
@@ -64,17 +76,20 @@ class AddMenuActivity : AppCompatActivity()  {
                     "Menu Name" to menu_name.text.toString(),
                     "Menu Desc" to menu_desc.text.toString(),
                     "Menu Price" to menu_price.text.toString()
+
                 )
 
                 db.collection("MenuItems")
                     .add(menuItem as Map<String, Any>)
                     .addOnSuccessListener { documentReference ->
                         Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                        documentId = documentReference.id
                         Toast.makeText(
                             this@AddMenuActivity,
                             "New Menu Item added successfully.",
                             Toast.LENGTH_SHORT
                         ).show()
+                        uploadImage()
                     }
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document", e)
@@ -123,17 +138,56 @@ class AddMenuActivity : AppCompatActivity()  {
     }
 
     //handle result of picked image
-    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null && data.getData() != null){
+            filePath = data.data  //new added
             image_upload.setImageURI(data?.data)
         }
     }
 
+    private fun uploadImage() {
+        if (filePath != null) {
+            val ref = storageReference?.child("uploads/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(filePath!!)
 
+            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation ref.downloadUrl
+            })?.addOnCompleteListener{task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    addUploadRecordToDb(downloadUri.toString())
+                } else {
+                    // Handle failures
+                }
+            }?.addOnFailureListener{
 
+            }
 
+        }else{
+            Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
+        }
+    }
 
+    private fun addUploadRecordToDb(uri: String) {
+        val menuItem = hashMapOf("imageUrl" to uri)
+
+        db.collection("MenuItems").document(documentId)
+            .set(menuItem, SetOptions.merge())
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error saving to DB", Toast.LENGTH_LONG).show()
+            }
+    }
 }
+
+
 
 
