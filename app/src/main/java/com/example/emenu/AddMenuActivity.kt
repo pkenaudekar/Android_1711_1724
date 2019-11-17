@@ -59,9 +59,9 @@ class AddMenuActivity : AppCompatActivity()  {
                 if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
                     PackageManager.PERMISSION_DENIED){
                     //permission denied
-                    val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+                    val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     //show popup to request runtime permission
-                    requestPermissions(permissions, PERMISSION_CODE);
+                    requestPermissions(permissions, PERMISSION_CODE)
                 }
                 else{
                     //permission already granted
@@ -84,9 +84,9 @@ class AddMenuActivity : AppCompatActivity()  {
             progressbar.setVisibility(VISIBLE)
             val TAG = "Adding Menu"
                 val menuItem = hashMapOf<String, Any>(
-                    "Menu Name" to menu_name.text.toString(),
-                    "Menu Desc" to menu_desc.text.toString(),
-                    "Menu Price" to menu_price.text.toString()
+                    "menuName" to menu_name.text.toString(),
+                    "menuDesc" to menu_desc.text.toString(),
+                    "menuPrice" to menu_price.text.toString()
                 )
 
                 db.collection("MenuItems")
@@ -128,9 +128,9 @@ class AddMenuActivity : AppCompatActivity()  {
 
     companion object {
         //image pick code
-        private val IMAGE_PICK_CODE = 1000;
+        private val IMAGE_PICK_CODE = 1000
         //Permission code
-        private val PERMISSION_CODE = 1001;
+        private val PERMISSION_CODE = 1001
     }
 
     //handle requested permission result

@@ -1,27 +1,17 @@
 package com.example.emenu.data
 
-class MenuItem {
-    var id: String? = null
-    var menuName: String? = null
-    var price: Double? = null
+data class MenuItem (
+    var id: String? ="",
+    var menuName: String?="",
+    var menuPrice: String = "",
+    var menuDesc: String? ="",
+    var imageUrl: String? = ""){
 
-    constructor() {}
 
-    constructor(id: String, menuName: String, price: Double) {
-        this.id = id
-        this.menuName = menuName
-        this.price = price
-    }
-
-    constructor(menuName: String, price: Double) {
-        this.menuName = menuName
-        this.price = price
-    }
-
-    fun toMap(): Map<String, Any> {
+    fun toMap(): HashMap<String, Any> {
         val result = HashMap<String, Any>()
-        result.put("Menu Item", menuName!!)
-        result.put("Price", price!!)
+        result["menuItem"] = menuName!!
+        result["menuPrice"] = menuPrice
 
         return result
     }

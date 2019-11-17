@@ -2,6 +2,7 @@ package com.example.emenu
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,8 @@ class MenuListAdapter (private val menuList: MutableList<MenuItem>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = menuList[position]
         holder.menuName.text = list.menuName
-        holder.price.text = list.price.toString()
+        holder.price.text = list.menuPrice
+        Log.d("Stuff",list.menuName)
 
         holder.edit.setOnClickListener{updateMenuList(list)}
         holder.delete.setOnClickListener { deleteMenuList(list.id!!, position) }
@@ -30,7 +32,7 @@ class MenuListAdapter (private val menuList: MutableList<MenuItem>,
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("UpdateMenuId", list.id)
         intent.putExtra("UpdateMenuName", list.menuName)
-        intent.putExtra("UpdateMenuPrice", list.price)
+        intent.putExtra("UpdateMenuPrice", list.menuPrice)
         context.startActivity(intent)
     }
 

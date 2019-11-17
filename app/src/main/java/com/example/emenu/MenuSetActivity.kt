@@ -17,7 +17,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_menu_set.*
 
 class MenuSetActivity : AppCompatActivity() {
-    lateinit var recyclerView: RecyclerView
+
     private val TAG = "MainActivity"
     private var mAdapter: MenuListAdapter? = null
     private var firestoreDB: FirebaseFirestore? = null
@@ -27,7 +27,6 @@ class MenuSetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_set)              //change it to activity_menu_set
 
-        recyclerView = findViewById(R.id.rvMenuList)
         firestoreDB = FirebaseFirestore.getInstance()
 
         loadMenuList()
@@ -85,10 +84,10 @@ class MenuSetActivity : AppCompatActivity() {
                         menuList.add(list)
                     }
 
-                    mAdapter = MenuListAdapter(menuList, applicationContext, firestoreDB!!)
-                    val mLayoutManager = LinearLayoutManager(applicationContext)
+                    mAdapter = MenuListAdapter(menuList, this@MenuSetActivity, firestoreDB!!)
+                    val mLayoutManager = LinearLayoutManager(this@MenuSetActivity)
                     rvMenuList.layoutManager = mLayoutManager
-                    rvMenuList.itemAnimator = DefaultItemAnimator()
+                   // rvMenuList.itemAnimator = DefaultItemAnimator()
                     rvMenuList.adapter = mAdapter
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.exception)

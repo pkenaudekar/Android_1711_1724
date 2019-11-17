@@ -22,6 +22,7 @@
         android:layout_width="435dp"
         android:layout_height="692dp"
         android:orientation="vertical"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,11 +31,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMenuList"
             android:layout_width="match_parent"
-            android:layout_height="605dp"
+            android:layout_height="624dp"
+            android:layout_margin="10dp"
             android:layout_marginTop="16dp"
             android:scrollbars="vertical"
-            android:layout_margin="10dp"
-            tools:listitem="@layout/activity_menulist"/>
+            tools:listitem="@layout/activity_menulist" />
     </LinearLayout>
 
     <Button
