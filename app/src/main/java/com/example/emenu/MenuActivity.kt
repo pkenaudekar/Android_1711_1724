@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_menu.*
 import kotlinx.android.synthetic.main.activity_menu_set.*
 
 class MenuActivity : AppCompatActivity() {
+    lateinit var recyclerView: RecyclerView
     private val TAG = "AddItemActivity"
 
     private var firestoreDB: FirebaseFirestore? = null
@@ -19,6 +21,7 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_menu)
 
+        recyclerView = findViewById(R.id.rvMenuList)
         firestoreDB = FirebaseFirestore.getInstance()
 
         val bundle = intent.extras

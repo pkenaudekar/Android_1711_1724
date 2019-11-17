@@ -39,7 +39,6 @@ class AddMenuActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_menu)
 
-
         var progressbar = findViewById<ProgressBar>(R.id.progressBar)
 
         //added new stuff
@@ -82,15 +81,14 @@ class AddMenuActivity : AppCompatActivity()  {
         }
 
         addMenu.setOnClickListener {
+            progressbar.setVisibility(VISIBLE)
             val TAG = "Adding Menu"
-
                 val menuItem = hashMapOf<String, Any>(
                     "Menu Name" to menu_name.text.toString(),
                     "Menu Desc" to menu_desc.text.toString(),
                     "Menu Price" to menu_price.text.toString()
                 )
 
-                progressbar.setVisibility(VISIBLE)
                 db.collection("MenuItems")
                     .add(menuItem as Map<String, Any>)
                     .addOnSuccessListener { documentReference ->
@@ -102,7 +100,7 @@ class AddMenuActivity : AppCompatActivity()  {
                             Toast.LENGTH_SHORT
                         ).show()
                         uploadImage()
-
+                        progressbar.setVisibility(GONE)
                     }
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document", e)
@@ -117,8 +115,8 @@ class AddMenuActivity : AppCompatActivity()  {
                 menu_desc.text.clear()
                 menu_price.text.clear()
                 image_upload.setImageDrawable(null)
-            progressbar.setVisibility(GONE)
             }
+
         }
 
     private fun pickImageFromGallery() {

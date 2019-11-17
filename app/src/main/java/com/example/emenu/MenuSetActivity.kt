@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.activity_menu_set.*
 
 class MenuSetActivity : AppCompatActivity() {
+    lateinit var recyclerView: RecyclerView
     private val TAG = "MainActivity"
     private var mAdapter: MenuListAdapter? = null
     private var firestoreDB: FirebaseFirestore? = null
@@ -25,6 +27,7 @@ class MenuSetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_set)              //change it to activity_menu_set
 
+        recyclerView = findViewById(R.id.rvMenuList)
         firestoreDB = FirebaseFirestore.getInstance()
 
         loadMenuList()
