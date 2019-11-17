@@ -99,13 +99,13 @@ class MenuSetActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+   override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         if (item != null) {
             if (item.itemId == R.id.addMenu) {
-                val intent = Intent(this, MenuSetActivity::class.java)
+                val intent = Intent(this, AddMenuActivity::class.java)
                 startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
-    }*/
+    }
 }

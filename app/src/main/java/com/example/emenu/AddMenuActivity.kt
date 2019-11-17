@@ -75,7 +75,11 @@ class AddMenuActivity : AppCompatActivity()  {
             }
         }
 
-
+        button_back.setOnClickListener{
+            val addIntent = Intent(this, MenuSetActivity::class.java).apply {  }
+            startActivity(addIntent)
+            finish()
+        }
 
         addMenu.setOnClickListener {
             val TAG = "Adding Menu"

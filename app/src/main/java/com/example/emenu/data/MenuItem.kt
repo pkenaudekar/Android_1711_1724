@@ -3,17 +3,17 @@ package com.example.emenu.data
 class MenuItem {
     var id: String? = null
     var menuName: String? = null
-    var price: String? = null
+    var price: Double? = null
 
     constructor() {}
 
-    constructor(id: String, menuName: String, price: String) {
+    constructor(id: String, menuName: String, price: Double) {
         this.id = id
         this.menuName = menuName
         this.price = price
     }
 
-    constructor(menuName: String, price: String) {
+    constructor(menuName: String, price: Double) {
         this.menuName = menuName
         this.price = price
     }
