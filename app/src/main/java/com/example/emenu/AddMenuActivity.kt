@@ -8,8 +8,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -35,6 +38,9 @@ class AddMenuActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_menu)
+
+
+        var progressbar = findViewById<ProgressBar>(R.id.progressBar)
 
         //added new stuff
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
@@ -69,6 +75,8 @@ class AddMenuActivity : AppCompatActivity()  {
             }
         }
 
+
+
         addMenu.setOnClickListener {
             val TAG = "Adding Menu"
 
@@ -76,9 +84,9 @@ class AddMenuActivity : AppCompatActivity()  {
                     "Menu Name" to menu_name.text.toString(),
                     "Menu Desc" to menu_desc.text.toString(),
                     "Menu Price" to menu_price.text.toString()
-
                 )
 
+                progressbar.setVisibility(VISIBLE)
                 db.collection("MenuItems")
                     .add(menuItem as Map<String, Any>)
                     .addOnSuccessListener { documentReference ->
@@ -90,6 +98,7 @@ class AddMenuActivity : AppCompatActivity()  {
                             Toast.LENGTH_SHORT
                         ).show()
                         uploadImage()
+
                     }
                     .addOnFailureListener { e ->
                         Log.w(TAG, "Error adding document", e)
@@ -99,10 +108,12 @@ class AddMenuActivity : AppCompatActivity()  {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                 menu_name.text.clear()
                 menu_desc.text.clear()
                 menu_price.text.clear()
                 image_upload.setImageDrawable(null)
+            progressbar.setVisibility(GONE)
             }
         }
 

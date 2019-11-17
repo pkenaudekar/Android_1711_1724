@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,9 +17,7 @@ import kotlinx.android.synthetic.main.activity_menu_set.*
 
 class MenuSetActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
-
     private var mAdapter: MenuListAdapter? = null
-
     private var firestoreDB: FirebaseFirestore? = null
     private var firestoreListener: ListenerRegistration? = null
 
@@ -26,8 +27,9 @@ class MenuSetActivity : AppCompatActivity() {
 
         firestoreDB = FirebaseFirestore.getInstance()
 
-       // loadNotesList()
-        firestoreListener = firestoreDB!!.collection("notes")
+        loadMenuList()
+
+        firestoreListener = firestoreDB!!.collection("MenuItems")
             .addSnapshotListener(EventListener { documentSnapshots, e ->
                 if (e != null) {
                     Log.e(TAG, "Listen failed!", e)
@@ -47,6 +49,7 @@ class MenuSetActivity : AppCompatActivity() {
 
             })
 
+
         //added new stuff
         val addButton : Button = findViewById(R.id.edit_button)
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
@@ -58,6 +61,51 @@ class MenuSetActivity : AppCompatActivity() {
             startActivity(addIntent)
             finish()
         }
-
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        firestoreListener!!.remove()
+    }
+
+    private fun loadMenuList() {
+        firestoreDB!!.collection("MenuItems")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val menuList = mutableListOf<MenuItem>()
+
+                    for (doc in task.result!!) {
+                        val list = doc.toObject<MenuItem>(MenuItem::class.java)
+                        list.id = doc.id
+                        menuList.add(list)
+                    }
+
+                    mAdapter = MenuListAdapter(menuList, applicationContext, firestoreDB!!)
+                    val mLayoutManager = LinearLayoutManager(applicationContext)
+                    rvMenuList.layoutManager = mLayoutManager
+                    rvMenuList.itemAnimator = DefaultItemAnimator()
+                    rvMenuList.adapter = mAdapter
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.exception)
+                }
+            }
+    }
+
+   override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    /*override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item != null) {
+            if (item.itemId == R.id.addMenu) {
+                val intent = Intent(this, MenuSetActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }*/
 }
