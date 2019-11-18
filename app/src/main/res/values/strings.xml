@@ -20,8 +20,11 @@
     <string name="type">Type</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="selected_item">Selected item:</string>
     <string name="add">Add</string>
-
+    <string name="_1">1</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="account_type">Account Type</string>
+    <string name="phone_no">Phone No</string>
 
 </resources>

@@ -11,8 +11,9 @@ class OptionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_options)
         btnAccountSet.setOnClickListener {
-            val intentAccSet = Intent(this, AccSetActivity::class.java)
-            startActivity(intentAccSet)
+            //val intentAccSet = Intent(this, AccSetActivity::class.java)
+            val intentAccList = Intent(this, AccountListActivity::class.java)
+            startActivity(intentAccList)
             finish()
         }
 

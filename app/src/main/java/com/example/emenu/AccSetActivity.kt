@@ -62,7 +62,7 @@ class AccSetActivity : AppCompatActivity() {
         }
 
         btnAddAcc.setOnClickListener {
-            val TAG = "MyMessage"
+            val s = "MyMessage"
             // Create a new user with a first and last name
             val account = hashMapOf(
                 "Name" to name.text.toString(),
@@ -76,7 +76,7 @@ class AccSetActivity : AppCompatActivity() {
             db.collection("LoginAccount")
                 .add(account as Map<String, Any>)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    Log.d(s, "DocumentSnapshot added with ID: ${documentReference.id}")
                     Toast.makeText(
                         this@AccSetActivity,
                         "New account added successfully.",
@@ -84,7 +84,7 @@ class AccSetActivity : AppCompatActivity() {
                     ).show()
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
+                    Log.w(s, "Error adding document", e)
                     Toast.makeText(
                         this@AccSetActivity,
                         "Account addition failed",
