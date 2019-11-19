@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMenuSet.setOnClickListener {
-            val intent_menu = Intent(this, MenuSetActivity::class.java)
+            val intent_menu = Intent(this, CustMenuActivity::class.java)
             startActivity(intent_menu)
             finish()
         }

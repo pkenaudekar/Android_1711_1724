@@ -1,6 +1,5 @@
 package com.example.emenu
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -82,7 +81,7 @@ class AddMenuActivity : AppCompatActivity()  {
 
         addMenu.setOnClickListener {
             progressbar.setVisibility(VISIBLE)
-            val TAG = "Adding Menu"
+            val s = "Adding Menu"
                 val menuItem = hashMapOf<String, Any>(
                     "menuName" to menu_name.text.toString(),
                     "menuDesc" to menu_desc.text.toString(),
@@ -92,7 +91,7 @@ class AddMenuActivity : AppCompatActivity()  {
                 db.collection("MenuItems")
                     .add(menuItem as Map<String, Any>)
                     .addOnSuccessListener { documentReference ->
-                        Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                        Log.d(s, "DocumentSnapshot added with ID: ${documentReference.id}")
                         documentId = documentReference.id
                         Toast.makeText(
                             this@AddMenuActivity,
@@ -103,7 +102,7 @@ class AddMenuActivity : AppCompatActivity()  {
                         progressbar.setVisibility(GONE)
                     }
                     .addOnFailureListener { e ->
-                        Log.w(TAG, "Error adding document", e)
+                        Log.w(s, "Error adding document", e)
                         Toast.makeText(
                             this@AddMenuActivity,
                             "Menu Item addition failed",
@@ -154,7 +153,7 @@ class AddMenuActivity : AppCompatActivity()  {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null && data.getData() != null){
-            filePath = data.data  //new added
+            filePath = data.data
             image_upload.setImageURI(data?.data)
         }
     }

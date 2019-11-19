@@ -2,7 +2,6 @@ package com.example.emenu
 
 import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,52 +9,52 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_menulist.view.*
 
-class MenuListAdapter(
-    private var menuList: MutableList<MenuItem>,
+class CustMenuListAdapter (
+    private var custmenuList: MutableList<MenuItem>,
     private var context: Context,
     private val firestoreDB: FirebaseFirestore
-) : RecyclerView.Adapter<MenuListAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<CustMenuListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val list = menuList[position]
+        val list = custmenuList[position]
         holder.bind(list, position)
     }
 
-    private fun updateMenuList(list: MenuItem) {
-        val intent = Intent(context, AddMenuActivity::class.java)
+    private fun addToCart(list: MenuItem) {
+        /*val intent = Intent(context, CustMenuActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("UpdateMenuId", list.id)
         intent.putExtra("UpdateMenuName", list.menuName)
         intent.putExtra("UpdateMenuDesc", list.menuDesc)
         intent.putExtra("UpdateMenuPrice", list.menuPrice)
-        context.startActivity(intent)
+        context.startActivity(intent)*/
     }
 
-    private fun deleteMenuList(id: String, position: Int) {
-        firestoreDB.collection("MenuItems")
+    private fun deleteFromCart(id: String, position: Int) {
+       firestoreDB.collection("MenuItems")
             .document(id)
             .delete()
             .addOnCompleteListener {
-                menuList.removeAt(position)
+                custmenuList.removeAt(position)
                 notifyItemRemoved(position)
-                notifyItemRangeChanged(position, menuList.size)
+                notifyItemRangeChanged(position, custmenuList.size)
                 Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
             }
     }
 
     override fun getItemCount(): Int {
-        return menuList.size
+        return custmenuList.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustMenuListAdapter.ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.activity_menulist, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.activity_cust_menulist, parent, false)
 
         return ViewHolder(view)
     }
@@ -64,8 +63,9 @@ class MenuListAdapter(
         internal var menuName: TextView = view.findViewById(R.id.tvTitle)
         internal var menuDesc: TextView = view.findViewById(R.id.tvContent)
         internal var price: TextView = view.findViewById(R.id.tvPrice)
-        internal var edit: ImageView = view.findViewById(R.id.ivEdit)
-        internal var delete: ImageView = view.findViewById(R.id.ivDelete)
+        internal var orderAdd: ImageView = view.findViewById(R.id.ivAdd)
+        internal var orderNum: TextView = view.findViewById(R.id.tv_itemCount)
+        internal var orderSub: ImageView = view.findViewById(R.id.ivSubtract)
         internal var itemImage: ImageView = view.findViewById(R.id.imageView_menuImg)
 
         fun bind(menuItem: MenuItem, position: Int) {
@@ -75,8 +75,9 @@ class MenuListAdapter(
             Picasso.get().load(menuItem.imageUrl).into(itemImage)
             Log.d("Stuff", menuItem.menuName!!)
 
-            edit.setOnClickListener { updateMenuList(menuItem) }
-            delete.setOnClickListener { deleteMenuList(menuItem.id!!, position) }
+            orderAdd.setOnClickListener { addToCart(menuItem) }
+            orderSub.setOnClickListener { deleteFromCart(menuItem.id!!, position) }
         }
     }
+
 }

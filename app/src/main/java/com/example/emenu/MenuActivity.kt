@@ -29,7 +29,7 @@ class MenuActivity : AppCompatActivity() {
             et_menuprice.setText(bundle.getString("UpdateMenuPrice"))
         }
 
-        edit_button.setOnClickListener {
+        button_addMenu.setOnClickListener {
             val menuName: String = etMenuName.text.toString()
             val menuPrice: String = et_menuprice.text.toString()
 

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,9 @@ import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_menu_set.*
+import kotlinx.android.synthetic.main.activity_menulist.*
 
 class MenuSetActivity : AppCompatActivity() {
 
@@ -25,7 +28,7 @@ class MenuSetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_set)              //change it to activity_menu_set
+        setContentView(R.layout.activity_menu_set) //change it to activity_menu_set
 
         firestoreDB = FirebaseFirestore.getInstance()
 
@@ -41,6 +44,7 @@ class MenuSetActivity : AppCompatActivity() {
 
                 if (documentSnapshots != null) {
                     for (doc in documentSnapshots) {
+
                         val list = doc.toObject(MenuItem::class.java)
                         list.id = doc.id
                         menuList.add(list)
@@ -53,16 +57,16 @@ class MenuSetActivity : AppCompatActivity() {
 
 
         //added new stuff
-        val addButton : Button = findViewById(R.id.edit_button)
+        //val addButton : Button = findViewById(R.id.edit_button)
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "List of Menu Items"
         setSupportActionBar(supportToolbar)
 
-        addButton.setOnClickListener {
+        /*addButton.setOnClickListener {
             val addIntent = Intent(this, AddMenuActivity::class.java).apply {  }
             startActivity(addIntent)
             finish()
-        }
+        }*/
     }
 
     override fun onDestroy() {
@@ -71,7 +75,9 @@ class MenuSetActivity : AppCompatActivity() {
         firestoreListener!!.remove()
     }
 
+
     private fun loadMenuList() {
+
         firestoreDB!!.collection("MenuItems")
             .get()
             .addOnCompleteListener { task ->
@@ -79,15 +85,17 @@ class MenuSetActivity : AppCompatActivity() {
                     val menuList = mutableListOf<MenuItem>()
 
                     for (doc in task.result!!) {
+
                         val list = doc.toObject<MenuItem>(MenuItem::class.java)
                         list.id = doc.id
                         menuList.add(list)
-                    }
+                        Log.d("LoadmenuList","${doc.data["imageUrl"]}")
+                        //Picasso.get().load(doc.data?.get("imageUrl").toString()).into(imageView_menuImg)
 
+                    }
                     mAdapter = MenuListAdapter(menuList, this@MenuSetActivity, firestoreDB!!)
                     val mLayoutManager = LinearLayoutManager(this@MenuSetActivity)
                     rvMenuList.layoutManager = mLayoutManager
-                   // rvMenuList.itemAnimator = DefaultItemAnimator()
                     rvMenuList.adapter = mAdapter
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.exception)
@@ -102,12 +110,10 @@ class MenuSetActivity : AppCompatActivity() {
     }
 
    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
-        if (item != null) {
-            if (item.itemId == R.id.addMenu) {
-                val intent = Intent(this, AddMenuActivity::class.java)
-                startActivity(intent)
-            }
-        }
+       if (item.itemId == R.id.addMenu) {
+           val intent = Intent(this, AddMenuActivity::class.java)
+           startActivity(intent)
+       }
         return super.onOptionsItemSelected(item)
     }
 }
