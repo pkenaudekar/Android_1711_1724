@@ -9,12 +9,21 @@
     android:weightSum="10"
     tools:context=".CustMenuActivity">
 
-    <ImageView
-        android:id="@+id/imageView_menuImg"
-        android:layout_width="47dp"
-        android:layout_height="50dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:cardCornerRadius="250dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/add"/>
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView_menuImg"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/add"
+            android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,6 +47,13 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Text for Content" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Text for Content" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +66,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/ivEdit"
+            android:id="@+id/ivAdd"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginRight="3dp"
@@ -68,7 +84,7 @@
             android:text="0" />
 
         <ImageView
-            android:id="@+id/ivDelete"
+            android:id="@+id/ivSubtract"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="0dp"

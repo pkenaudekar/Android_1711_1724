@@ -57,16 +57,16 @@ class MenuSetActivity : AppCompatActivity() {
 
 
         //added new stuff
-        val addButton : Button = findViewById(R.id.edit_button)
+        //val addButton : Button = findViewById(R.id.edit_button)
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "List of Menu Items"
         setSupportActionBar(supportToolbar)
 
-        addButton.setOnClickListener {
+        /*addButton.setOnClickListener {
             val addIntent = Intent(this, AddMenuActivity::class.java).apply {  }
             startActivity(addIntent)
             finish()
-        }
+        }*/
     }
 
     override fun onDestroy() {
