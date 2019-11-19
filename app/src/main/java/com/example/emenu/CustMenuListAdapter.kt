@@ -24,21 +24,20 @@ class CustMenuListAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val list = custmenuList[position]
         holder.bind(list, position)
-
     }
 
-    private fun updateMenuList(list: MenuItem) {
-        val intent = Intent(context, CustMenuActivity::class.java)
+    private fun addToCart(list: MenuItem) {
+        /*val intent = Intent(context, CustMenuActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("UpdateMenuId", list.id)
         intent.putExtra("UpdateMenuName", list.menuName)
         intent.putExtra("UpdateMenuDesc", list.menuDesc)
         intent.putExtra("UpdateMenuPrice", list.menuPrice)
-        context.startActivity(intent)
+        context.startActivity(intent)*/
     }
 
-    private fun deleteMenuList(id: String, position: Int) {
-        firestoreDB.collection("MenuItems")
+    private fun deleteFromCart(id: String, position: Int) {
+       firestoreDB.collection("MenuItems")
             .document(id)
             .delete()
             .addOnCompleteListener {
@@ -76,8 +75,8 @@ class CustMenuListAdapter (
             Picasso.get().load(menuItem.imageUrl).into(itemImage)
             Log.d("Stuff", menuItem.menuName!!)
 
-            orderAdd.setOnClickListener { updateMenuList(menuItem) }
-            orderSub.setOnClickListener { deleteMenuList(menuItem.id!!, position) }
+            orderAdd.setOnClickListener { addToCart(menuItem) }
+            orderSub.setOnClickListener { deleteFromCart(menuItem.id!!, position) }
         }
     }
 
