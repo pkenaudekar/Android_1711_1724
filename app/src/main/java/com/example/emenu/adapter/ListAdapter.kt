@@ -1,7 +1,8 @@
 package com.example.emenu.adapter
 
-import android.app.LauncherActivity
+
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.emenu.data.model.ItemList
 import com.example.emenu.R
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -41,28 +40,47 @@ class ListAdapter(options: FirestoreRecyclerOptions<ItemList>) :
     }
 }
 */
-class ListAdapter(
-    private val itemList: MutableList<ItemList>,
-    private val context: Context,
-    private val firestoreDB: FirebaseFirestore
-)
-    : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter (private val itemList: MutableList<ItemList>,
+                       private val context : Context,
+                       private val db: FirebaseFirestore): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_items, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = itemList[position]
+        holder.username.text = item.username
+        Log.d("username",item.username.toString())
+        holder.name.text = item.name
+        holder.password.text = item.password
+        holder.phoneNo.text = item.phoneNo
+        holder.accType.text = item.accType
+        holder.itemNumber.text = item.itemNumber
+
+    }
+
+    /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent!!.context).inflate(R.layout.list_items, parent, false)
 
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-
+        Log.d("itemlist",item.toString())
         holder!!.username.text = item.username
+        Log.d("username",item.username.toString())
         holder.name.text = item.name
         holder.password.text = item.password
         holder.phoneNo.text = item.phoneNo
         holder.accType.text = item.accType
-        holder.itemNumber.text = item.itemNumber.toString()
+        //holder.itemNumber.text = item.itemNumber.toString()
 
 
        //holder.edit.setOnClickListener { updateNote(item) }
@@ -70,8 +88,11 @@ class ListAdapter(
     }
 
     override fun getItemCount(): Int {
+
         return itemList.size
     }
+
+*/
 
     inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
         internal var username: TextView = view.findViewById(R.id.text_username)
@@ -84,10 +105,12 @@ class ListAdapter(
         /*init {
 
 
-            edit = view.findViewById(R.id.ivEdit)
-            delete = view.findViewById(R.id.ivDelete)
+            //edit = view.findViewById(R.id.ivEdit)
+            //delete = view.findViewById(R.id.ivDelete)
         }*/
     }
+
+
 /*
     private fun updateList(item: ItemList) {
         val intent = Intent(context, NoteActivity::class.java)
@@ -109,6 +132,8 @@ class ListAdapter(
                 Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
             }
     }*/
+
+
 }
 
 

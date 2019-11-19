@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="@string/_1"
+            android:text="@string/item_no"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView

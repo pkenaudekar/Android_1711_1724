@@ -4,69 +4,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.emenu.adapter.ListAdapter
 import com.example.emenu.data.model.ItemList
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.activity_account_list.*
-import kotlinx.android.synthetic.main.activity_options.*
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class AccountListActivity : AppCompatActivity() {
-/*
-    // Access a Cloud Firestore instance from your Activity
-    private val db = FirebaseFirestore.getInstance()
 
-    // Reference to a Collection
-    private val loginAccountRef = db.collection("LoginAccount")
-    private var adapter: ListAdapter? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account_list)
-        setUpRecyclerView()
-    }
-
-    private fun setUpRecyclerView() {
-        val query = loginAccountRef.orderBy("username", Query.Direction.DESCENDING)
-
-        val options = FirestoreRecyclerOptions.Builder<List>()
-            .setQuery(query, List::class.java)
-            .build()
-
-        adapter = ListAdapter(options)
-
-        val recyclerView: RecyclerView  = findViewById(R.id.list_view)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.setLayoutManager(LinearLayoutManager(this))
-        recyclerView.setAdapter(adapter)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        adapter!!.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        adapter!!.stopListening()
-    }
-*/
     private val s = "AccountListActivity"
-
-    private var adapter: ListAdapter? = null
-
+    private var lAdapter: ListAdapter? = null
     private var db: FirebaseFirestore? = FirebaseFirestore.getInstance()
     private var listener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_list)
-
-        //db =
 
         loadItemList()
 
@@ -79,20 +34,28 @@ class AccountListActivity : AppCompatActivity() {
 
                 val itemList = mutableListOf<ItemList>()
 
-                for (doc in documentSnapshots!!)
-                {
-                    val item = doc.toObject(ItemList::class.java)
-                    item.id = doc.id
-                    itemList.add(item)
+                if (documentSnapshots != null) {
+                    for (doc in documentSnapshots) {
+                        val item = doc.toObject(ItemList::class.java)
+                        item.id = doc.id
+                        itemList.add(item)
 
+                    }
                 }
 
-                adapter = ListAdapter(itemList, applicationContext, db!!)
-                list_view.adapter = adapter
+                lAdapter = ListAdapter(itemList, applicationContext, db!!)
+                list_view.adapter = lAdapter
             })
+
 
         btnAddAcc.setOnClickListener {
             val intentAccSet = Intent(this, AccSetActivity::class.java)
+            startActivity(intentAccSet)
+            finish()
+        }
+
+        btnBackAcc.setOnClickListener {
+            val intentAccSet = Intent(this, OptionsActivity::class.java)
             startActivity(intentAccSet)
             finish()
         }
@@ -110,21 +73,29 @@ class AccountListActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val itemList = mutableListOf<ItemList>()
-
+                    var acc:Int = 0
                     for (doc in task.result!!) {
+                        acc++
                         val item = doc.toObject<ItemList>(ItemList::class.java)
                         item.id = doc.id
+                        item.username = doc.get("Username").toString()
+                        item.name = doc.get("Name").toString()
+                        item.password = doc.get("Password").toString()
+                        item.phoneNo = doc.get("Phone Number").toString()
+                        item.accType = doc.get("Type").toString()
+                        item.itemNumber = acc.toString()
                         itemList.add(item)
                     }
 
-                    adapter = ListAdapter(itemList, applicationContext, db!!)
-                    val mLayoutManager = LinearLayoutManager(applicationContext)
+                    lAdapter = ListAdapter(itemList, this@AccountListActivity, db!!)
+                    val mLayoutManager = LinearLayoutManager(this@AccountListActivity)
                     list_view.layoutManager = mLayoutManager
-                    list_view.itemAnimator = DefaultItemAnimator()
-                    list_view.adapter = adapter
+                    //list_view.itemAnimator = DefaultItemAnimator()
+                    list_view.adapter = lAdapter
                 } else {
                     Log.d(s, "Error getting documents: ", task.exception)
                 }
             }
     }
+
 }

@@ -3,6 +3,7 @@ package com.example.emenu
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.emenu.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_options.*
 
 class OptionsActivity : AppCompatActivity() {
@@ -17,8 +18,14 @@ class OptionsActivity : AppCompatActivity() {
             finish()
         }
 
-        btnMenuSet.setOnClickListener {
+        btnCustomerMenu.setOnClickListener {
             val intentMenuSet = Intent(this, MenuSetActivity::class.java)
+            startActivity(intentMenuSet)
+            finish()
+        }
+
+        btnBackAccOpt.setOnClickListener {
+            val intentMenuSet = Intent(this, LoginActivity::class.java)
             startActivity(intentMenuSet)
             finish()
         }
