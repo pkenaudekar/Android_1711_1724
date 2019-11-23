@@ -64,7 +64,7 @@ class AccSetActivity : AppCompatActivity() {
 
         btnAddAcc.setOnClickListener {
             val s = "MyMessage"
-            // Create a new user with a first and last name
+
             val account = hashMapOf(
                 "Name" to name.text.toString(),
                 "Password" to password.text.toString(),
