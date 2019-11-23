@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emenu.adapter.ListAdapter
 import com.example.emenu.data.model.ItemList
-import com.example.emenu.ui.login.SwipeToEditCallback
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.activity_account_list.*
 import kotlinx.android.synthetic.main.list_items.*
@@ -119,7 +118,7 @@ class AccountListActivity : AppCompatActivity() {
                 //val adapter = list_view.adapter as ListAdapter
                 //val item = itemList[position]
                 //Log.d("Doc ID: ",position.toString())
-                //adapter.removeAt(item.docId.toString(),viewHolder.adapterPosition)
+                //adapter.removeAt(this@AccountListActivity.findViewById<>(R.id.doc_number).toString(),viewHolder.adapterPosition)
                 loadItemList()
             }
 
@@ -129,6 +128,7 @@ class AccountListActivity : AppCompatActivity() {
         val swipeHandlerRight = object : SwipeToEditCallback(this@AccountListActivity) {
             override fun onBindViewHolder(holder: ListAdapter.ViewHolder?, position: Int) {
                 ///holder.docNumber.to
+
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {

@@ -1,4 +1,4 @@
-package com.example.emenu.ui.login
+package com.example.emenu
 
 import android.content.Context
 import android.graphics.*
@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.emenu.R
 import com.example.emenu.adapter.ListAdapter
 
 abstract class SwipeToEditCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {

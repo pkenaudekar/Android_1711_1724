@@ -128,6 +128,7 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
     }*/
 
     fun removeAt(id: String, position: Int) {
+
         db.collection("LoginAccount")
             .document(id)
             .delete()
