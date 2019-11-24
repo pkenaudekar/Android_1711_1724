@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="inherit"
-    tools:context=".AddMenuActivity">
+    tools:context=".OrderPreviewActivity">
 
 
     <TextView
@@ -68,5 +68,6 @@
         android:layout_height="583dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="145dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:listitem="@layout/activity_recyclerview_menubill"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

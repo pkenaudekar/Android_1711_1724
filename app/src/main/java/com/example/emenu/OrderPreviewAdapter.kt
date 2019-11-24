@@ -18,7 +18,7 @@ private val firestoreDB: FirebaseFirestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.activity_menuorderpreview, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.activity_recyclerview_menubill, parent, false)
 
         return ViewHolder(view)
     }
@@ -39,7 +39,7 @@ private val firestoreDB: FirebaseFirestore
         internal var price: TextView = view.findViewById(R.id.tvBillPrice)
         internal  var quantity : TextView = view.findViewById(R.id.tvBillQty)
 
-        fun bind(menuItem: MenuItem, quantity: Int) {
+        fun bind( menuItem: MenuItem, quantity: Int) {
             menuName.text = menuItem.menuName
             menuDesc.text = menuItem.menuDesc
             price.text = menuItem.menuPrice
