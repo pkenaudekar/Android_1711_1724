@@ -1,19 +1,20 @@
 package com.example.emenu
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import com.example.emenu.data.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
+
 
 class CustMenuListAdapter (
     private var custmenuList: MutableList<MenuItem>,
@@ -26,33 +27,25 @@ class CustMenuListAdapter (
         holder.bind(list, position)
     }
 
-    private fun addToCart(list: MenuItem) {
-        /*val intent = Intent(context, CustMenuActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra("UpdateMenuId", list.id)
-        intent.putExtra("UpdateMenuName", list.menuName)
-        intent.putExtra("UpdateMenuDesc", list.menuDesc)
-        intent.putExtra("UpdateMenuPrice", list.menuPrice)
-        context.startActivity(intent)*/
+    private fun addToCart(list: MenuItem,orderNum:TextView) {
+        val temp = orderNum.text.toString().toInt() + 1
+        orderNum.text = temp.toString()
     }
 
-    private fun deleteFromCart(id: String, position: Int) {
-       firestoreDB.collection("MenuItems")
-            .document(id)
-            .delete()
-            .addOnCompleteListener {
-                custmenuList.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, custmenuList.size)
-                Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
-            }
+    private fun deleteFromCart(id: String, position: Int,orderNum:TextView) {
+
+        var temp = orderNum.text.toString().toInt()
+        if (temp > 0){
+            temp -= 1
+            orderNum.text = temp.toString()
+        }
     }
 
     override fun getItemCount(): Int {
         return custmenuList.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustMenuListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.activity_cust_menulist, parent, false)
 
@@ -64,8 +57,8 @@ class CustMenuListAdapter (
         internal var menuDesc: TextView = view.findViewById(R.id.tvContent)
         internal var price: TextView = view.findViewById(R.id.tvPrice)
         internal var orderAdd: ImageView = view.findViewById(R.id.ivAdd)
-        internal var orderNum: TextView = view.findViewById(R.id.tv_itemCount)
         internal var orderSub: ImageView = view.findViewById(R.id.ivSubtract)
+        internal var orderNum: TextView = view.findViewById(R.id.tv_itemCount)
         internal var itemImage: ImageView = view.findViewById(R.id.imageView_menuImg)
 
         fun bind(menuItem: MenuItem, position: Int) {
@@ -75,8 +68,8 @@ class CustMenuListAdapter (
             Picasso.get().load(menuItem.imageUrl).into(itemImage)
             Log.d("Stuff", menuItem.menuName!!)
 
-            orderAdd.setOnClickListener { addToCart(menuItem) }
-            orderSub.setOnClickListener { deleteFromCart(menuItem.id!!, position) }
+            orderAdd.setOnClickListener { addToCart(menuItem,orderNum) }
+            orderSub.setOnClickListener { deleteFromCart(menuItem.id!!, position,orderNum) }
         }
     }
 

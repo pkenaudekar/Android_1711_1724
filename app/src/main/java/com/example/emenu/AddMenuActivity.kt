@@ -33,18 +33,19 @@ class AddMenuActivity : AppCompatActivity()  {
     private var storageReference: StorageReference? = null
     private lateinit var documentId: String
     val db = FirebaseFirestore.getInstance()
+    private lateinit var progressbar :ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_menu)
 
-        var progressbar = findViewById<ProgressBar>(R.id.progressBar)
+
 
         //added new stuff
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "Manage Menu"
         setSupportActionBar(supportToolbar)
-
+        progressbar = findViewById(R.id.progressBar)
         val addMenu =findViewById<Button>(R.id.button_addMenu)
         val menu_name = findViewById<EditText>(R.id.etMenuName)
         val menu_desc = findViewById<EditText>(R.id.et_menu_desc)
@@ -99,7 +100,7 @@ class AddMenuActivity : AppCompatActivity()  {
                             Toast.LENGTH_SHORT
                         ).show()
                         uploadImage()
-                        progressbar.setVisibility(GONE)
+
                     }
                     .addOnFailureListener { e ->
                         Log.w(s, "Error adding document", e)
@@ -192,6 +193,7 @@ class AddMenuActivity : AppCompatActivity()  {
         db.collection("MenuItems").document(documentId)
             .set(menuItem, SetOptions.merge())
             .addOnSuccessListener { documentReference ->
+                progressbar.visibility = GONE
                 Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
             }
             .addOnFailureListener { e ->

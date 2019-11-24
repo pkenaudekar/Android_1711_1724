@@ -31,23 +31,22 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMenuList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="618dp"
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
             android:scrollbars="vertical"
             tools:listitem="@layout/activity_menulist" />
     </LinearLayout>
 
-    <!--<Button
-        android:id="@+id/edit_button"
+    <Button
+        android:id="@+id/order_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
-        android:text="Manage Menu Items"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:text="Order"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />-->
-
+        app:layout_constraintStart_toEndOf="@+id/button_editMenu"
+        android:visibility="gone"
+        tools:ignore="UnknownIdInLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,9 +89,6 @@ class MenuSetActivity : AppCompatActivity() {
                         val list = doc.toObject<MenuItem>(MenuItem::class.java)
                         list.id = doc.id
                         menuList.add(list)
-                        Log.d("LoadmenuList","${doc.data["imageUrl"]}")
-                        //Picasso.get().load(doc.data?.get("imageUrl").toString()).into(imageView_menuImg)
-
                     }
                     mAdapter = MenuListAdapter(menuList, this@MenuSetActivity, firestoreDB!!)
                     val mLayoutManager = LinearLayoutManager(this@MenuSetActivity)

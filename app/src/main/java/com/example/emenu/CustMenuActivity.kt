@@ -3,6 +3,9 @@ package com.example.emenu
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View.VISIBLE
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,22 +20,23 @@ class CustMenuActivity : AppCompatActivity() {
     private var mAdapter: CustMenuListAdapter? = null
     private var firestoreDB: FirebaseFirestore? = null
     private var firestoreListener: ListenerRegistration? = null
-
+    private lateinit var orderButton : Button
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_set)
 
-
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "E-Menu"
-        setSupportActionBar(supportToolbar)
 
+        orderButton = findViewById(R.id.order_button)
+        orderButton.visibility = VISIBLE
         firestoreDB = FirebaseFirestore.getInstance()
 
         loadMenuList()
 
         firestoreListener = firestoreDB!!.collection("MenuItems")
-            .addSnapshotListener(EventListener { documentSnapshots, e ->
+             .addSnapshotListener(EventListener { documentSnapshots, e ->
                 if (e != null) {
                     Log.e(TAG, "Listen failed!", e)
                     return@EventListener
