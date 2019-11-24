@@ -55,9 +55,6 @@ class MenuSetActivity : AppCompatActivity() {
 
             })
 
-
-        //added new stuff
-        //val addButton : Button = findViewById(R.id.edit_button)
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "List of Menu Items"
         setSupportActionBar(supportToolbar)

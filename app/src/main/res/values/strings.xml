@@ -27,5 +27,11 @@
     <string name="phone_no">Phone No</string>
     <string name="item_no">Item No</string>
     <string name="doc_no">Doc No</string>
-
+    <string name="item_name">Item Name</string>
+    <string name="quantity">Quantity</string>
+    <string name="price">Price</string>
+    <string name="sr_no">Sr. No.</string>
+    <string name="logo">logo</string>
+    <string name="e_menu">E-Menu</string>
+    <string name="total">Total :</string>
 </resources>

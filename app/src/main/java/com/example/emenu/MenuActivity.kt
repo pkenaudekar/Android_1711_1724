@@ -24,7 +24,6 @@ class MenuActivity : AppCompatActivity() {
         val bundle = intent.extras
         if (bundle != null) {
             id = bundle.getString("UpdateMenuId").toString()
-
             etMenuName.setText(bundle.getString("UpdateMenuName"))
             et_menuprice.setText(bundle.getString("UpdateMenuPrice"))
         }
