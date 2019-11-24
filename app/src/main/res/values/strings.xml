@@ -27,5 +27,6 @@
     <string name="phone_no">Phone No</string>
     <string name="item_no">Item No</string>
     <string name="doc_no">Doc No</string>
+    <string name="Update">Update</string>
 
 </resources>

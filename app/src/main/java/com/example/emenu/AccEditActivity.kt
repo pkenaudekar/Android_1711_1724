@@ -7,25 +7,26 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_acc_set.*
+import kotlinx.android.synthetic.main.activity_acc_edit.*
+import kotlinx.android.synthetic.main.activity_acc_set.btnBack
+import kotlinx.android.synthetic.main.activity_acc_set.btnReset
 
-class AccSetActivity : AppCompatActivity() {
+class AccEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_acc_set)
+        setContentView(R.layout.activity_acc_edit)
 
         var first = true
         val typeArray = arrayOf("Type of Account", "Administrative", "Non-Administrative")
-        val name = findViewById<EditText>(R.id.editTextName)
+        var name = findViewById<EditText>(R.id.editTextName)
         val username = findViewById<EditText>(R.id.editTextUsername)
         val password = findViewById<EditText>(R.id.editTextPass)
         val phone = findViewById<EditText>(R.id.editTextPhone)
         val spinner = findViewById<Spinner>(R.id.spinnerAdminType)
         val db = FirebaseFirestore.getInstance()
 
-        val ursname: String = getIntent().getStringExtra("Username")
-
+        //name.text = intent.getStringExtra("Name").toString()
 
         if (spinner != null) {
             val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, typeArray)
@@ -46,7 +47,7 @@ class AccSetActivity : AppCompatActivity() {
 
                         if (position == 0) {
                             Toast.makeText(
-                                this@AccSetActivity,
+                                this@AccEditActivity,
                                 "Please select appropriate option!",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -57,7 +58,7 @@ class AccSetActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // Code to perform some action when nothing is selected
                     Toast.makeText(
-                        this@AccSetActivity,
+                        this@AccEditActivity,
                         "Please select appropriate option in Type od Account!",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -65,7 +66,7 @@ class AccSetActivity : AppCompatActivity() {
             }
         }
 
-        btnAddAcc.setOnClickListener {
+        btnUpdateAcc.setOnClickListener {
             val s = "MyMessage"
 
             val account = hashMapOf(
@@ -82,7 +83,7 @@ class AccSetActivity : AppCompatActivity() {
                 .addOnSuccessListener { documentReference ->
                     Log.d(s, "DocumentSnapshot added with ID: ${documentReference.id}")
                     Toast.makeText(
-                        this@AccSetActivity,
+                        this@AccEditActivity,
                         "New account added successfully.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -90,7 +91,7 @@ class AccSetActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(s, "Error adding document", e)
                     Toast.makeText(
-                        this@AccSetActivity,
+                        this@AccEditActivity,
                         "Account addition failed",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -115,7 +116,7 @@ class AccSetActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             val intentOptActivity = Intent(this, AccountListActivity::class.java)
             startActivity(intentOptActivity)
-            //finish()
+            finish()
         }
     }
 }

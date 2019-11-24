@@ -3,6 +3,7 @@ package com.example.emenu
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +49,7 @@ class AccountListActivity : AppCompatActivity() {
                     }
                 }
 
-                lAdapter = ListAdapter(itemList, applicationContext, db!!)
+                lAdapter = ListAdapter(itemList, this@AccountListActivity, db!!)
                 list_view.adapter = lAdapter
             })
 
@@ -68,8 +69,6 @@ class AccountListActivity : AppCompatActivity() {
 
 
     }
-
-   // ItemTouchHelper.SimpleCallBack.
 
     private fun swapItemList(){
         /*
@@ -111,14 +110,31 @@ class AccountListActivity : AppCompatActivity() {
         //Swipe Left Action
         val swipeHandlerLeft = object : SwipeToDeleteCallback(this@AccountListActivity) {
             override fun onBindViewHolder(holder: ListAdapter.ViewHolder?, position: Int) {
+                /*val item = itemList[position]
+
+                holder!!.docNumber.text = item.docId
+                Log.d("Doc ID: ",item.docId.toString())
+                holder.itemNumber.text = item.itemNumber
+                holder.username.text = item.username
+                holder.accType.text = item.accType
+                holder.name.text = item.name
+                holder.password.text = item.name
+                holder.phoneNo.text = item.phoneNo*/
 
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+
+                //var textDocNo : TextView = findViewById(R.id.doc_number)
                 //val adapter = list_view.adapter as ListAdapter
+
+                //var documentId = itemList[position].docId
+                //Log.d("Doc Item: ",documentId)
                 //val item = itemList[position]
-                //Log.d("Doc ID: ",position.toString())
-                //adapter.removeAt(this@AccountListActivity.findViewById<>(R.id.doc_number).toString(),viewHolder.adapterPosition)
+                //Log.d("Doc ID: ",text_acc_type)
+                //adapter.removeAt(textDocNo.toString(),viewHolder.adapterPosition)
+
                 loadItemList()
             }
 
@@ -132,10 +148,24 @@ class AccountListActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
-                //val adapter = list_view.adapter as ListAdapter
+                /*val adapter = list_view.adapter as ListAdapter
+                viewHolder.layoutPosition.toString()
                 //val item = itemList[position]
-               // Log.d("Document id ",item.docId.toString())
-                //adapter.removeAt(doc_number.toString(),viewHolder.adapterPosition)
+                Log.d("Document id ",viewHolder.layoutPosition.toString())
+                //adapter.removeAt(doc_number.toString(),viewHolder.adapterPosition)*/
+                var textUsername : TextView = findViewById(R.id.text_username)
+                var textName : TextView = findViewById(R.id.text_name)
+                var textPassword : TextView = findViewById(R.id.text_password)
+                var textPhone : TextView = findViewById(R.id.text_phone)
+                var textAccType : TextView = findViewById(R.id.text_acc_type)
+                val intent = Intent(this@AccountListActivity,AccEditActivity::class.java)
+                intent.putExtra("Username",textUsername.text.toString())
+                intent.putExtra("Name",textName.text.toString())
+                intent.putExtra("Password",textPassword.text.toString())
+                intent.putExtra("PhoneNo",textPhone.text.toString())
+                intent.putExtra("Type",textAccType.text.toString())
+                startActivity(intent)
+                finish()
                 loadItemList()
             }
         }

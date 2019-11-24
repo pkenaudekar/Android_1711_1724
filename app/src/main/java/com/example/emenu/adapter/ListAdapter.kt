@@ -1,16 +1,13 @@
 package com.example.emenu.adapter
 
 
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.emenu.AccSetActivity
+import com.example.emenu.AccountListActivity
 import com.example.emenu.R
 import com.example.emenu.data.model.ItemList
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,9 +40,9 @@ class ListAdapter(options: FirestoreRecyclerOptions<ItemList>) :
     }
 }
 */
-class ListAdapter (private val itemList: MutableList<ItemList>,
-                       private val context : Context,
-                       private val db: FirebaseFirestore): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(private val itemList: MutableList<ItemList>,
+                  private val context: AccountListActivity,
+                  private val db: FirebaseFirestore): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_items, parent, false)
@@ -107,6 +104,7 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
         internal var itemNumber: TextView = view.findViewById(R.id.list_item_number)
         internal var docNumber: TextView = view.findViewById(R.id.doc_number)
 
+
         /*init {
 
 
@@ -139,6 +137,9 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
                 Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
             }
     }
+
+
+
 }
 
 
