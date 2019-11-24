@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="15dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="20dp"
+    android:id="@+id/BillDetails"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/tvSrNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Sr.No."
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvBillItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/item_name"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvBillQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/quantity"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvBillPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/price"
+        android:textColor="@color/textColor"
+        android:textSize="18sp" />
+</LinearLayout>

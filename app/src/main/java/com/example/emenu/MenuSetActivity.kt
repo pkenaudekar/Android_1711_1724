@@ -55,9 +55,6 @@ class MenuSetActivity : AppCompatActivity() {
 
             })
 
-
-        //added new stuff
-        //val addButton : Button = findViewById(R.id.edit_button)
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "List of Menu Items"
         setSupportActionBar(supportToolbar)
@@ -89,9 +86,6 @@ class MenuSetActivity : AppCompatActivity() {
                         val list = doc.toObject<MenuItem>(MenuItem::class.java)
                         list.id = doc.id
                         menuList.add(list)
-                        Log.d("LoadmenuList","${doc.data["imageUrl"]}")
-                        //Picasso.get().load(doc.data?.get("imageUrl").toString()).into(imageView_menuImg)
-
                     }
                     mAdapter = MenuListAdapter(menuList, this@MenuSetActivity, firestoreDB!!)
                     val mLayoutManager = LinearLayoutManager(this@MenuSetActivity)

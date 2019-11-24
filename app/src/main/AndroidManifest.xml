@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AccEditActivity"></activity>
+        <activity android:name=".OrderPreviewActivity"/>
+
         <activity android:name=".AccountListActivity" />
         <activity android:name=".MenuSetActivity" />
         <activity android:name=".AccSetActivity" />

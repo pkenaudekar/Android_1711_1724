@@ -1,12 +1,14 @@
 package com.example.emenu.adapter
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.emenu.AccEditActivity
 import com.example.emenu.AccountListActivity
 import com.example.emenu.R
 import com.example.emenu.data.model.ItemList
@@ -105,6 +107,29 @@ class ListAdapter(private val itemList: MutableList<ItemList>,
         internal var docNumber: TextView = view.findViewById(R.id.doc_number)
 
 
+        fun removeAt(id: String, position: Int) {
+
+            db.collection("LoginAccount")
+                .document(id)
+                .delete()
+                .addOnCompleteListener {
+                    itemList.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, itemList.size)
+                    Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        fun updateList(item: ItemList) {
+            val intent = Intent(context, AccEditActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("Name", item.name)
+            intent.putExtra("Username", item.username)
+            intent.putExtra("Password", item.password)
+            intent.putExtra("Phone Number", item.phoneNo)
+            intent.putExtra("Type", item.accType)
+            context.startActivity(intent)
+        }
         /*init {
 
 
@@ -125,18 +150,7 @@ class ListAdapter(private val itemList: MutableList<ItemList>,
         context.startActivity(intent)
     }*/
 
-    fun removeAt(id: String, position: Int) {
 
-        db.collection("LoginAccount")
-            .document(id)
-            .delete()
-            .addOnCompleteListener {
-                itemList.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, itemList.size)
-                Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
-            }
-    }
 
 
 

@@ -110,6 +110,8 @@ class AccountListActivity : AppCompatActivity() {
         //Swipe Left Action
         val swipeHandlerLeft = object : SwipeToDeleteCallback(this@AccountListActivity) {
             override fun onBindViewHolder(holder: ListAdapter.ViewHolder?, position: Int) {
+                holder!!.removeAt(holder.docNumber.text.toString(),position)
+                Log.d("Document id ",holder.docNumber.text.toString())
                 /*val item = itemList[position]
 
                 holder!!.docNumber.text = item.docId
@@ -129,8 +131,8 @@ class AccountListActivity : AppCompatActivity() {
                 //var textDocNo : TextView = findViewById(R.id.doc_number)
                 //val adapter = list_view.adapter as ListAdapter
 
-                //var documentId = itemList[position].docId
-                //Log.d("Doc Item: ",documentId)
+               // var documentId = itemList[position].docId
+               // Log.d("Doc Item: ",documentId)
                 //val item = itemList[position]
                 //Log.d("Doc ID: ",text_acc_type)
                 //adapter.removeAt(textDocNo.toString(),viewHolder.adapterPosition)
@@ -143,8 +145,8 @@ class AccountListActivity : AppCompatActivity() {
         //Swipe Right Action
         val swipeHandlerRight = object : SwipeToEditCallback(this@AccountListActivity) {
             override fun onBindViewHolder(holder: ListAdapter.ViewHolder?, position: Int) {
-                ///holder.docNumber.to
-
+                //holder!!.updateList(holder.docNumber.toString(),position)
+               // Log.d("Document id ",holder.docNumber.text.toString())
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {

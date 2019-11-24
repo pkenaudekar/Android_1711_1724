@@ -33,18 +33,17 @@ class AddMenuActivity : AppCompatActivity()  {
     private var storageReference: StorageReference? = null
     private lateinit var documentId: String
     val db = FirebaseFirestore.getInstance()
+    private lateinit var progressbar :ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_menu)
 
-        var progressbar = findViewById<ProgressBar>(R.id.progressBar)
-
-        //added new stuff
         val supportToolbar = findViewById<Toolbar>(R.id.my_toolbar)
         supportToolbar.title = "Manage Menu"
         setSupportActionBar(supportToolbar)
 
+        progressbar = findViewById(R.id.progressBar)
         val addMenu =findViewById<Button>(R.id.button_addMenu)
         val menu_name = findViewById<EditText>(R.id.etMenuName)
         val menu_desc = findViewById<EditText>(R.id.et_menu_desc)
@@ -53,23 +52,18 @@ class AddMenuActivity : AppCompatActivity()  {
 
         //BUTTON CLICK
         btn_choose_image.setOnClickListener {
-            //check runtime permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
                     PackageManager.PERMISSION_DENIED){
-                    //permission denied
                     val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    //show popup to request runtime permission
                     requestPermissions(permissions, PERMISSION_CODE)
                 }
                 else{
-                    //permission already granted
-                    pickImageFromGallery();
+                    pickImageFromGallery()
                 }
             }
             else{
-                //system OS is < Marshmallow
-                pickImageFromGallery();
+                pickImageFromGallery()
             }
         }
 
@@ -99,7 +93,7 @@ class AddMenuActivity : AppCompatActivity()  {
                             Toast.LENGTH_SHORT
                         ).show()
                         uploadImage()
-                        progressbar.setVisibility(GONE)
+
                     }
                     .addOnFailureListener { e ->
                         Log.w(s, "Error adding document", e)
@@ -115,34 +109,27 @@ class AddMenuActivity : AppCompatActivity()  {
                 menu_price.text.clear()
                 image_upload.setImageDrawable(null)
             }
-
         }
 
     private fun pickImageFromGallery() {
-        //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
     companion object {
-        //image pick code
         private val IMAGE_PICK_CODE = 1000
-        //Permission code
         private val PERMISSION_CODE = 1001
     }
 
-    //handle requested permission result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
             PERMISSION_CODE -> {
                 if (grantResults.size >0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED){
-                    //permission from popup granted
                     pickImageFromGallery()
                 }
                 else{
-                    //permission from popup denied
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -192,6 +179,7 @@ class AddMenuActivity : AppCompatActivity()  {
         db.collection("MenuItems").document(documentId)
             .set(menuItem, SetOptions.merge())
             .addOnSuccessListener { documentReference ->
+                progressbar.visibility = GONE
                 Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
             }
             .addOnFailureListener { e ->

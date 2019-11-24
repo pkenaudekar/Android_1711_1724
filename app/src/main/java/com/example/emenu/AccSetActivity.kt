@@ -24,7 +24,7 @@ class AccSetActivity : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.spinnerAdminType)
         val db = FirebaseFirestore.getInstance()
 
-        val ursname: String = getIntent().getStringExtra("Username")
+       // val ursname: String = getIntent().getStringExtra("Username")
 
 
         if (spinner != null) {

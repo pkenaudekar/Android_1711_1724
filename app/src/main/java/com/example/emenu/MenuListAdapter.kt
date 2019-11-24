@@ -27,7 +27,7 @@ class MenuListAdapter(
         holder.bind(list, position)
     }
 
-    private fun updateMenuList(list: MenuItem) {
+    /*private fun updateMenuList(list: MenuItem) {
         val intent = Intent(context, AddMenuActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra("UpdateMenuId", list.id)
@@ -35,7 +35,7 @@ class MenuListAdapter(
         intent.putExtra("UpdateMenuDesc", list.menuDesc)
         intent.putExtra("UpdateMenuPrice", list.menuPrice)
         context.startActivity(intent)
-    }
+    }*/
 
     private fun deleteMenuList(id: String, position: Int) {
         firestoreDB.collection("MenuItems")
@@ -75,7 +75,7 @@ class MenuListAdapter(
             Picasso.get().load(menuItem.imageUrl).into(itemImage)
             Log.d("Stuff", menuItem.menuName!!)
 
-            edit.setOnClickListener { updateMenuList(menuItem) }
+            //edit.setOnClickListener { updateMenuList(menuItem) }
             delete.setOnClickListener { deleteMenuList(menuItem.id!!, position) }
         }
     }
