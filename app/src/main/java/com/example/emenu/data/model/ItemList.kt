@@ -11,10 +11,11 @@ class ItemList {
     var phoneNo: String?=null
     var accType: String?=null
     var itemNumber:String?=null
+    var docId:String?=null
 
     constructor(){}
 
-    constructor(id:String, username: String, name: String, password: String, phoneNo: String, accType: String, itemNumber: String) {
+    constructor(id:String, username: String, name: String, password: String, phoneNo: String, accType: String, itemNumber: String,docId:String ) {
         this.id=id
         this.username = username
         this.name = name
@@ -22,14 +23,16 @@ class ItemList {
         this.phoneNo = phoneNo
         this.accType = accType
         this.itemNumber = itemNumber
+        this.docId=docId
     }
-    constructor(username: String, name: String, password: String, phoneNo: String, accType: String, itemNumber: String) {
+    constructor(username: String, name: String, password: String, phoneNo: String, accType: String, itemNumber: String,docId:String) {
         this.username = username
         this.name = name
         this.password = password
         this.phoneNo = phoneNo
         this.accType = accType
         this.itemNumber = itemNumber
+        this.docId=docId
     }
 
     fun toMap(): Map<String, Any> {
@@ -41,6 +44,7 @@ class ItemList {
         result["phoneNo"] = phoneNo!!
         result["accType"] = accType!!
         result["itemNumber"] = itemNumber!!
+        result["docId"] = docId!!
         return result
     }
 }

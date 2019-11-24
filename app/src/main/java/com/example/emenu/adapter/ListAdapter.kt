@@ -2,14 +2,17 @@ package com.example.emenu.adapter
 
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.example.emenu.data.model.ItemList
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.emenu.AccSetActivity
 import com.example.emenu.R
+import com.example.emenu.data.model.ItemList
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -56,13 +59,14 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.username.text = item.username
-        Log.d("username",item.username.toString())
+
         holder.name.text = item.name
         holder.password.text = item.password
         holder.phoneNo.text = item.phoneNo
         holder.accType.text = item.accType
         holder.itemNumber.text = item.itemNumber
-
+        holder.docNumber.text = item.docId
+        //Log.d("document",item.docId.toString())
     }
 
     /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -101,6 +105,7 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
         internal var phoneNo: TextView = view.findViewById(R.id.text_phone)
         internal var accType: TextView = view.findViewById(R.id.text_acc_type)
         internal var itemNumber: TextView = view.findViewById(R.id.list_item_number)
+        internal var docNumber: TextView = view.findViewById(R.id.doc_number)
 
         /*init {
 
@@ -113,16 +118,18 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
 
 /*
     private fun updateList(item: ItemList) {
-        val intent = Intent(context, NoteActivity::class.java)
+        val intent = Intent(context, AccSetActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra("UpdateNoteId", item.id)
-        intent.putExtra("UpdateNoteTitle", item.title)
-        intent.putExtra("UpdateNoteContent", item.content)
+        intent.putExtra("Username", item.username)
+        intent.putExtra("Password", item.password)
+        intent.putExtra("Phone Number", item.phoneNo)
+        intent.putExtra("Type", item.accType)
         context.startActivity(intent)
-    }
+    }*/
 
-    private fun deleteList(id: String, position: Int) {
-        firestoreDB.collection("LoginAccount")
+    fun removeAt(id: String, position: Int) {
+
+        db.collection("LoginAccount")
             .document(id)
             .delete()
             .addOnCompleteListener {
@@ -131,10 +138,9 @@ class ListAdapter (private val itemList: MutableList<ItemList>,
                 notifyItemRangeChanged(position, itemList.size)
                 Toast.makeText(context, "Item has been deleted!", Toast.LENGTH_SHORT).show()
             }
-    }*/
-
-
+    }
 }
+
 
 
 

@@ -16,10 +16,20 @@
             android:id="@+id/list_item_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:text="@string/item_no"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/doc_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_item_number"
+            android:layout_alignParentEnd="true"
+            android:text="@string/doc_no"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/text_username"
